@@ -1,0 +1,11 @@
+﻿# 大文件与中间产物
+video.mp4
+*.mp4
+*.part
+half1/
+half2/
+shots/
+cookies.txt
+__pycache__/
+*.pyc
+.venv/

@@ -1,0 +1,34 @@
+{
+  "name": "bilibili-video-text-pipeline",
+  "version": "1.0.0",
+  "description": "B站视频（纯文字画布 + 硬字幕）→ 口播全文 + 画布文字 + 摘要输入稿 + 详细总结",
+  "tags": ["bilibili", "ocr", "rapidocr", "hard-subtitle", "video-to-text", "screen-text", "chinese", "cost-optimization"],
+  "entrypoint": "scripts/video2text.py",
+  "requirements": {
+    "python": "3.12",
+    "packages": ["rapidocr_onnxruntime", "opencv-python", "numpy", "imageio-ffmpeg", "yt-dlp"],
+    "external": ["ffmpeg (imageio-ffmpeg 自带)"]
+  },
+  "files": {
+    "README.md": {"labels": ["docs", "index"], "desc": "项目说明、标签、快速开始、成本对比"},
+    "LICENSE": {"labels": ["legal"], "desc": "MIT"},
+    "MANIFEST.json": {"labels": ["meta", "labels"], "desc": "文件与标签清单"},
+    "docs/总结模板.md": {"labels": ["prompt", "template"], "desc": "固定总结骨架"},
+    "docs/技巧与成本.md": {"labels": ["notes", "benchmark", "pitfalls"], "desc": "参数依据、失败尝试、成本模型"},
+    "scripts/video2text.py": {"labels": ["entrypoint", "automation"], "desc": "BV号→下载→OCR→合并→摘要输入稿"},
+    "scripts/extract3.py": {"labels": ["core", "ocr"], "desc": "顺序解码，字幕 rec-only + 画布 det+rec"},
+    "scripts/merge3.py": {"labels": ["merge"], "desc": "两半结果合并去重"},
+    "scripts/批量处理.ps1": {"labels": ["batch", "powershell"], "desc": "批量跑多个 BV"},
+    "samples/BV1NtJi6bEe3/摘要输入.md": {"labels": ["sample", "llm-input"], "desc": "3.2万字摘要输入稿（写总结只读这个）"},
+    "samples/BV1NtJi6bEe3/口播全文.txt": {"labels": ["sample", "transcript"], "desc": "1612段硬字幕逐段"},
+    "samples/BV1NtJi6bEe3/画布文字.md": {"labels": ["sample", "canvas-ocr"], "desc": "596行画布文字"},
+    "samples/BV1NtJi6bEe3/社保一次性补缴_详细总结.md": {"labels": ["sample", "output"], "desc": "2.3万字成品总结"},
+    "samples/BV1NtJi6bEe3/统计.json": {"labels": ["sample", "stats"], "desc": "提取统计"},
+    "samples/BV1NtJi6bEe3/meta.json": {"labels": ["sample", "metadata"], "desc": "视频元数据（BV/标题/UP/数据）"}
+  },
+  "not_included": {
+    "video.mp4": "154MB，超过 GitHub 单文件限制；请用 BV 号自行下载",
+    "half1/ half2/shots": "中间截图与原始 JSONL，可由脚本重新生成",
+    "cookies.txt": "已删除，脚本会现取匿名 Cookie"
+  }
+}
